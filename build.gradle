@@ -1,0 +1,74 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
+        classpath 'com.novoda:bintray-release:0.3.2'
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'com.novoda.bintray-release'
+
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+
+    group = 'com.koenv.realm-pojo-processor'
+    version = '0.1-SNAPSHOT'
+    repositories {
+        jcenter()
+    }
+
+    gradle.taskGraph.whenReady { taskGraph ->
+        if (taskGraph.hasTask(":generatePomFileForMavenPublication")) {
+            taskGraph.getAllTasks().find{
+                it.name == "generatePomFileForMavenPublication"
+            }.doLast {
+                file("build/publications/maven/pom-default.xml").delete()
+                pom {
+                    //noinspection GroovyAssignabilityCheck
+                    project {
+                        name project.name
+                        description publish.description
+                        url publish.website
+                        version project.version
+
+                        scm {
+                            url 'git@github.com:koesie10/realm-pojo-processor.git'
+                            connection 'scm:git:git@github.com:koesie10/realm-pojo-processor.git'
+                            developerConnection 'scm:git:git@github.com:koesie10/realm-pojo-processor.git'
+                        }
+
+                        licenses {
+                            license {
+                                name 'MIT License'
+                                url 'http://www.opensource.org/licenses/mit-license.php'
+                            }
+                        }
+
+                        developers {
+                            developer {
+                                id 'koesie10'
+                                name 'Koen Vlaswinkel'
+                                email 'koen@vlaswinkel.info'
+                            }
+                        }
+                    }
+                }.writeTo("build/publications/maven/pom-default.xml")
+            }
+        }
+    }
+
+    publish {
+        userOrg = 'koesie10'
+        groupId = project.group
+        artifactId = project.name
+        licences = ['MIT']
+        publishVersion = project.version
+        description = 'Realm POJO'
+        website = 'https://github.com/koesie10/realm-pojo'
+    }
+}
