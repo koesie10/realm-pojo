@@ -25,23 +25,23 @@ public interface User {
 
 This will then create the following classes (only outlines shown here):
 
-* DefaultUser implement User, Realmable<RealmUser>
-    * getId()
-    * getName()
-    * getPassword()
-    * toRealmObject(Realm realm)
-    * static fromRealmObject(RealmUser model)
-    * static getDefaultModel(User model)
-    * static newBuilder()
-    * Builder
-        * id(int id)
-        * name(String name)
-        * password(String password)
-        * build
-* RealmUser extends RealmObject implements User
-    * getId()
-    * setId(int id)
-    * getName()
-    * setName(String name)
-    * getPassword()
-    * setPassword(String password)
+* `DefaultUser implement User, Realmable<RealmUser>`
+    * `getId()`
+    * `getName()`
+    * `getPassword()`
+    * `toRealmObject(Realm realm)`
+    * `static fromRealmObject(RealmUser model)`
+    * `static getDefaultModel(User model)`
+    * `static newBuilder()`
+    * `Builder`
+        * `id(int id)`
+        * `name(String name)`
+        * `password(String password)`
+        * `build()`
+* `RealmUser extends RealmObject implements User`
+    * `getId()`
+    * `setId(int id)`
+    * `getName()`
+    * `setName(String name)`
+    * `getPassword()`
+    * `setPassword(String password)`
